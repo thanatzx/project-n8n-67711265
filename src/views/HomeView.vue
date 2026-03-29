@@ -26,32 +26,31 @@
 
 
                             <div class=" mb-3">
-                                <label class="form-label">รหัสนักศึกษา *</label>
+                                <label class="form-label">รหัสสินค้า *</label>
                                 <input type="text" class="form-control" v-model="data.id" required>
                             </div>
 
                             <div class=" mb-3">
-                                <label class="form-label">ชื่อ-นามสกุล *</label>
-                                <input type="text" class="form-control" v-model="data.fullname" required>
+                                <label class="form-label">ชื่อสินค้า*</label>
+                                <input type="text" class="form-control" v-model="data.name" required>
                             </div>
 
-
-                            <div class="mb-3">   
-                                <select class="form-select text-center" v-model="data.department" required>
-                                    <option value="" disabled>-- เลือกคณะ --</option>
-                                    <option value="บริหารธุรกิจ">บริหารธุรกิจ</option>
-                                    <option value="บัญชี">บัญชี</option>
-                                    <option value="เทคโนโลยีสารสนเท">เทคโนโลยีสารสนเทศ</option>
-                                </select>
+                            <div class=" mb-3">
+                                <label class="form-label">จำนวน*</label>
+                                <input type="text" class="form-control" v-model="data.amount" required>
                             </div>
 
+                            <div class=" mb-3">
+                                <label class="form-label">ราคา*</label>
+                                <input type="text" class="form-control" v-model="data.price" required>
+                            </div>
 
-                               <button class="btn btn-primary w-100 fw-bold" :disabled="loading">
+                            <button class="btn btn-primary w-100 fw-bold" :disabled="loading">
+
                                 <span v-if="loading" class="spinner-border spinner-border-sm me-2"></span>
+
                                 {{ loading ? 'กำลังส่งข้อมูล...' : 'บันทึกข้อมูล' }}
                             </button>
-
-
 
                         </form>
 
@@ -69,8 +68,9 @@ import { reactive, ref } from "vue";
 
 const data = reactive({
     id: "",
-    fullname: "",
-    department: ""
+    name: "",
+    amount: "",
+    price: "",
 });
 
 const loading = ref(false);
@@ -85,7 +85,7 @@ const submitForm = async () => {
     status.message = "";
 
     try {
-        const response = await fetch("http://localhost:5678/webhook/register", {
+        const response = await fetch("http://localhost:5678/webhook/pProducts", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -108,8 +108,9 @@ const submitForm = async () => {
 
         // reset form
         data.id = "";
-        data.fullname = "";
-        data.department = "";
+        data.name = "";
+        data.amount = "";
+        data.price = "";
 
     } catch (error) {
         console.error(error);

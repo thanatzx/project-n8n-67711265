@@ -3,8 +3,8 @@
 
     <!-- Header -->
     <div class="text-center mb-4">
-      <h2 class="fw-bold text-primary">ระบบแสดงรายชื่อสินค้า</h2>
-      <p class="text-muted">ข้อมูลจาก Tui Corporate</p>
+      <h2 class="fw-bold text-primary">📋 ระบบแสดงรายการสินค้า</h2>
+      <p class="text-muted">ข้อมูลจาก n8n Webhook API</p>
     </div>
 
     <!-- Card -->
@@ -13,7 +13,7 @@
 
         <!-- ปุ่ม -->
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="mb-0">รายการข้อมูลสินค้า</h5>
+          <h5 class="mb-0">รายการข้อมูล</h5>
           <button class="btn btn-primary" @click="fetchData">
             🔄 โหลดข้อมูล
           </button>
@@ -30,6 +30,7 @@
           <table class="table table-hover align-middle text-center">
             <thead class="table-primary">
               <tr>
+                <th>#</th>
                 <th>รหัสสินค้า</th>
                 <th>ชื่อสินค้า</th>
                 <th>จำนวน</th>
@@ -39,9 +40,10 @@
             <tbody>
               <tr v-for="(item, index) in users" :key="index">
                 <td>{{ index + 1 }}</td>
-                <td>{{ item.ID }}</td>
-                <td>{{ item.Fullname }}</td>
-                <td>{{ item.Department }}</td>
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.amount }}</td>
+                <td>{{ item.price }}</td>
               </tr>
             </tbody>
           </table>
@@ -67,7 +69,7 @@ const loading = ref(false)
 const fetchData = async () => {
   loading.value = true
   try {
-    const response = await fetch('http://localhost:5678/webhook/data')
+    const response = await fetch('http://localhost:5678/webhook/products')
     const data = await response.json()
     users.value = data
   } catch (error) {
